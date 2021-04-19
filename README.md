@@ -970,24 +970,6 @@ Because it’s meant to be run at build time, you won’t be able to use data th
 
 ##  Pre-rendering and Data Fetching
 
-[1](https://nextjs.org/learn/basics/data-fetching)
-
-[2](https://nextjs.org/learn/basics/data-fetching/setup)
-
-[3](https://nextjs.org/learn/basics/data-fetching/pre-rendering)
-
-[4](https://nextjs.org/learn/basics/data-fetching/two-forms)
-
-[5](https://nextjs.org/learn/basics/data-fetching/with-data)
-
-[6](https://nextjs.org/learn/basics/data-fetching/blog-data)
-
-[7](https://nextjs.org/learn/basics/data-fetching/implement-getstaticprops)
-
-[8](https://nextjs.org/learn/basics/data-fetching/getstaticprops-details)
-
-[9](https://nextjs.org/learn/basics/data-fetching/request-time)
-
 ## getStaticProps Details
 
 Here is some essential information you should know about [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation).
@@ -1041,6 +1023,133 @@ One of the reasons for this restriction is that React needs to have all the requ
 [Static Generation](https://nextjs.org/docs/basic-features/pages#static-generation-recommended) is **not** a good idea if you cannot pre-render a page ahead of a user's request. Maybe your page shows frequently updated data, and the page content changes on every request.
 
 In cases like this, you can try [**Server-side Rendering**](https://nextjs.org/docs/basic-features/pages#server-side-rendering) or skip pre-rendering. Let’s talk about these strategies before we move on to the next lesson.
+
+
+
+## Fetching Data at Request Time
+
+If you need to fetch data at **request time** instead of at build time, you can try [**Server-side Rendering**](https://nextjs.org/docs/basic-features/pages#server-side-rendering):
+
+![image-20210417204747508](/home/roger/.config/Typora/typora-user-images/image-20210417204747508.png)
+
+
+
+To use [Server-side Rendering](https://nextjs.org/docs/basic-features/pages#server-side-rendering), you need to export [`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering) instead of [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) from your page.
+
+
+
+### Using `getServerSideProps`
+
+Here’s the starter code for [`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering). It’s not necessary for our blog example, so we won’t be implementing it.
+
+```js
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      // props for your component
+    }
+  }
+}
+```
+
+Because [`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering) is called at request time, its parameter (`context`) contains request specific parameters.
+
+You should use [`getServerSideProps`](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering) only if you need to pre-render a page whose data must be fetched at request time. Time to first byte ([TTFB](https://web.dev/time-to-first-byte/)) will be slower than [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) because the server must compute the result on every request, and the result cannot be cached by a [CDN](https://vercel.com/docs/edge-network/overview) without extra configuration.
+
+### Client-side Rendering
+
+If you **do not** need to pre-render the data, you can also use the following strategy (called [**Client-side Rendering**](https://nextjs.org/docs/basic-features/data-fetching#fetching-data-on-the-client-side)):
+
+- Statically generate (pre-render) parts of the page that do not require external data.
+- When the page loads, fetch external data from the client using JavaScript and populate the remaining parts.
+
+
+
+![image-20210417205044281](/home/roger/.config/Typora/typora-user-images/image-20210417205044281.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
